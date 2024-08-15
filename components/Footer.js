@@ -3,15 +3,15 @@ import { View, Text, StyleSheet } from "react-native"
 export default function Footer(){
     return (
         <View style={styles.footer}>
-        <Text style={styles.footerText}>ny</Text>
+        <Text style={styles.footerText}> Copyright © Renan Cavichi</Text>
       </View>
     )
 }
 
 const styles = StyleSheet.create({
     footer: {
-        height: 300,
-        backgroundColor: 'yellow',
+        height: 75,
+        backgroundColor: 'black',
         justifyContent: 'center',
         alignItems: 'center',
       },

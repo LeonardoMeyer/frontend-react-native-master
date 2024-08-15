@@ -1,22 +1,28 @@
-import { View, Text, StyleSheet } from "react-native";
+// main.js
+import React from 'react';
+import { ScrollView, StyleSheet } from 'react-native';
+import CardAccount from './cardAccount';
 
-export default function Main(){
-    return(
-        <View style={styles.main}>
-        <Text style={styles.mainText}>ma</Text>
-      </View>
-    )
+export default function Main() {
+    return (
+        <ScrollView contentContainerStyle={styles.main}>
+            <CardAccount 
+    title="facebook"
+    content="credenciais principais"
+    email="meufacebocas.com"
+    password="senhafortefodas0190"
+    isMain={true}
+    icon="data:image/jpeg;base64,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"
+            />
+        </ScrollView>
+    );
 }
 
 const styles = StyleSheet.create({
-        main: {
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-          },
-          mainText: {
-            fontSize: 18,
-            color: '#333',
-            fontWeight: 'bold'
-          }
-})
+    main: {
+        flexGrow: 1,
+        gap: 10,
+        alignItems: 'center',
+        padding: 16,
+    },
+});
