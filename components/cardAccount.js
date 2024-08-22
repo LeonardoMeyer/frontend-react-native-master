@@ -1,4 +1,3 @@
-// cardAccount.js
 import React from 'react';
 import { View, Text, StyleSheet, Image } from 'react-native';
 
@@ -6,7 +5,7 @@ const CardAccount = ({ title, content, email, password, isMain, icon }) => {
     return (
         <View style={[styles.card, isMain && styles.mainCard]}>
             <View style={styles.header}>
-                {isMain && icon && (
+                {icon && (
                     <Image source={{ uri: icon }} style={styles.icon} />
                 )}
                 <Text style={styles.title}>{title}</Text>
@@ -20,46 +19,51 @@ const CardAccount = ({ title, content, email, password, isMain, icon }) => {
 
 const styles = StyleSheet.create({
     card: {
-        backgroundColor: '#fff',
-        padding: 16,
-        marginVertical: 8,
+        backgroundColor: '#ffffff',
+        padding: 20,
+        marginVertical: 10,
+        borderRadius: 10,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
         shadowRadius: 4,
-        elevation: 2,
-        width: '100%',
+        elevation: 3,
+        width: '90%',
+        alignSelf: 'center',
     },
     mainCard: {
-        backgroundColor: '#f9f9f9',
+        backgroundColor: '#f1f1f1',
         borderColor: '#ddd',
         borderWidth: 1,
     },
     header: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginBottom: 8,
+        marginBottom: 12,
     },
     icon: {
-        width: 24,
-        height: 24,
-        marginRight: 8,
+        width: 28,
+        height: 28,
+        borderRadius: 14,
+        marginRight: 10,
     },
     title: {
-        fontSize: 18,
+        fontSize: 20,
         fontWeight: 'bold',
+        color: '#333',
     },
     content: {
         fontSize: 16,
         marginVertical: 8,
+        color: '#666',
     },
     email: {
         fontSize: 14,
-        color: '#555',
+        color: '#777',
     },
     password: {
         fontSize: 14,
-        color: '#555',
+        color: '#777',
     },
 });
 
