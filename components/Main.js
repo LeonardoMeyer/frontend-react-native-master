@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import {View, StyleSheet, Text} from 'react-native'
+import {View, StyleSheet, Text, TextInput, Pressable} from 'react-native'
 import CardAccount from './cardAccount'
 //import CardAccount2 from './CardAccount2'
 //import Calc from './Calc'
@@ -7,6 +7,10 @@ import CardAccount from './cardAccount'
 export default function Content(){
 
   const [accounts, setAccounts] = useState([])
+  const [txtServico, setTxtServico] = useState('')
+  const [txtUsername, setTxtUsername] = useState('')
+  const [txtPass, setTxtPass] = useState('')
+  const [txtImgUrl, setTxtImgUrl] = useState('')
  
    useEffect(() => {
         const getAccounts = async () => {
@@ -24,11 +28,74 @@ export default function Content(){
         getAccounts()
    }, [])
 
+   const handleCreateAccount = async () => {
+    const account = {
+        service: txtServico,
+        username: txtUsername,
+        logo_image: txtImgUrl,
+        pass: txtPass,
+        user_id: 1
+    }
+
+    const response = await fetch('http://localhost:3000/account', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(account)
+    })
+      if(response.ok){
+        const data = await response.json()
+        console.log(data)
+        setAccounts([data.account, ...accounts])
+        return
+      }
+      console.log('Erro ao carregar accounts')
+      return
+   }
 
     return (
         <View style={styles.content}>
         
         {/* <Calc /> */}
+
+        <View>
+          <Text>Serviço:</Text>
+          <TextInput 
+            style={styles.input}
+            onChangeText={setTxtServico}
+            value={txtServico}
+            placeholder='Digite o nome do serviço...'
+            placeholderTextColor='#DDDDDD'
+          />
+          <Text>Username:</Text>
+          <TextInput 
+            style={styles.input}
+            onChangeText={setTxtUsername}
+            value={txtUsername}
+          />
+          <Text>Password:</Text>
+          <TextInput 
+            style={styles.input}
+            onChangeText={setTxtPass}
+            value={txtPass}
+          />
+          <Text>Logo URL:</Text>
+          <TextInput 
+            style={styles.input}
+            onChangeText={setTxtImgUrl}
+            value={txtImgUrl}
+            keyboardType='url'
+          />
+          <Pressable
+            style={styles.button}
+            onPress={handleCreateAccount}
+          >
+            <Text>Cadatrar</Text>
+          </Pressable>
+
+
+        </View>        
 
         { accounts.length === 0 && <Text>Loading...</Text>}
 
@@ -45,44 +112,29 @@ export default function Content(){
         </View>
     )
 }
-  //     id: 1,
-  //     service: 'LinkedIn',
-  //     imgUrl: 'https://static.vecteezy.com/system/resources/previews/023/986/970/original/linkedin-logo-linkedin-logo-transparent-linkedin-icon-transparent-free-free-png.png',
-  //     userName: '@Leonardo Meyer'
-  //   },
-  //   {
-  //     id: 2,
-  //     service: 'GitHub',
-  //     imgUrl: 'https://cdn-icons-png.flaticon.com/512/25/25231.png',
-  //     userName: 'LeonardoMeyer'
-  //   },
-  //   {
-  //     id: 3,
-  //     service: 'Medium',
-  //     imgUrl: 'https://www.svgrepo.com/show/354057/medium-icon.svg',
-  //     userName: 'LeonardoMeyer'
-  //   }
-  // ];
-
-  return (
-    <View style={styles.content}>
-      {accounts.map(account => (
-        <CardAccount2
-          key={account.id}
-          service={account.service}
-          imgUrl={account.imgUrl}
-          userName={account.userName}
-        />
-      ))}
-    </View>
-  );
 
 const styles = StyleSheet.create({
-  content: {
-    padding: 16,
-    backgroundColor: '#f5f5f5',
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  }
-});
+    content: {
+        gap: 10,
+        //backgroundColor: "#545656",
+        padding: 15
+        //justifyContent: 'center',
+        //alignItems: 'center'
+      },
+    input: {
+      borderWidth: 1,
+      borderStyle: 'solid',
+      borderColor: '#444444',
+      paddingHorizontal: 10,
+      paddingVertical: 6,
+      marginVertical: 5,
+      borderRadius: 5
+    },
+    button: ({pressed}) => [{
+      backgroundColor: pressed ? '#ed7900': '#f97f01',
+      alignItems: 'center',
+      marginVertical: 10,
+      borderRadius: 10,
+      paddingVertical: 5
+    }]
+})

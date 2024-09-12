@@ -25,9 +25,6 @@ export default function Calc ({ service, userName, imgUrl }) {
     )
 }
 
-
-
-
 const styles = StyleSheet.create({
     card: {
         display: 'flex',
