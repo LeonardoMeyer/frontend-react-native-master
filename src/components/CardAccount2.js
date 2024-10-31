@@ -1,55 +1,51 @@
-import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
+import { Image } from 'expo-image';
+import EvilIcons from '@expo/vector-icons/EvilIcons';
 
-const CardAccount2 = ({ service, imgUrl, userName }) => {
+export default function CardAccount2({ service, userName, imgUrl }) {
     return (
-        <TouchableOpacity style={styles.card}>
-            <View style={styles.header}>
-                <Image source={{ uri: imgUrl }} style={styles.image} />
-                <View style={styles.textContainer}>
-                    <Text style={styles.service}>{service}</Text>
-                    <Text style={styles.userName}>{userName}</Text>
-                </View>
+        <View style={styles.card}>
+            <Image style={styles.logo} source={imgUrl} />
+            <View style={styles.infoContainer}>
+                <Text style={styles.service}>{service}</Text>
+                <Text style={styles.username}>{userName}</Text>
             </View>
-        </TouchableOpacity>
+            <EvilIcons name="arrow-right" size={26} color="#CCCCCC" />
+        </View>
     );
-};
+}
 
 const styles = StyleSheet.create({
     card: {
-        backgroundColor: '#e0f7fa',
-        borderRadius: 10,
-        padding: 16,
-        marginVertical: 10,
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#F5F5F5',  // fundo cinza claro
+        padding: 15,
+        borderRadius: 15,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.2,
-        shadowRadius: 3,
-        elevation: 4,
-        alignItems: 'center',
+        shadowOpacity: 0.1,
+        shadowRadius: 10,
+        elevation: 5,
+        marginVertical: 10,
     },
-    header: {
-        flexDirection: 'column',
-        alignItems: 'center',
+    logo: {
+        width: 50,
+        height: 50,
+        borderRadius: 10,  // cantos arredondados para a imagem
     },
-    image: {
-        width: 60,
-        height: 60,
-        borderRadius: 30,
-        marginBottom: 10,
-    },
-    textContainer: {
-        alignItems: 'center',
+    infoContainer: {
+        flex: 1,
+        marginLeft: 15,
     },
     service: {
-        fontSize: 20,
+        fontSize: 18,
         fontWeight: 'bold',
-        color: '#00796b',
+        color: '#333333',
+        marginBottom: 4,
     },
-    userName: {
-        fontSize: 16,
-        color: '#004d40',
-        marginTop: 4,
+    username: {
+        color: '#777777',
+        fontSize: 14,
     },
 });
-export default CardAccount2;
