@@ -1,28 +1,61 @@
 import {View, StyleSheet, Text, TextInput} from 'react-native'
 import { Image } from 'expo-image'
 import Button from '../components/Button'
-import { useLocalSearchParams } from 'expo-router'
+import { useLocalSearchParams, useRouter} from 'expo-router'
+import { useAccountStore } from '../stores/useAccountStore'
+import * as Clipboard from 'expo-clipboard'
 
 export default function ShowPass(){
 
-    const {imgUrl, service, userName, pass} = useLocalSearchParams()
+    const router = useRouter()
+    const {id} = useLocalSearchParams()
+    const { accounts, deleteAccount } = useAccountStore()
+
+    const account = accounts.find((item) => item.id === +id)
+
+    const handleDelete = async () => {
+        const response = await fetch(`http://localhost:3000/account/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        if(response.ok){
+            const data = await response.json()
+            console.log(data)
+            deleteAccount(+id)
+            router.back()
+            return
+        }
+        console.log('Erro ao carregar accounts')
+        return
+    }
+
+    const copyToClipboard = () => {
+        Clipboard.setString(account?.pass || '')
+        alert('Senha copiada!')
+    }
 
     return (
         <View style={{padding: 20}}>
             <View style={styles.card}>
                 <Image 
                     style={styles.logo} 
-                    source={imgUrl}
+                    source={account?.logo_image}
                 />
                 <View style={styles.content}>
-                    <Text style={styles.service}>{service}</Text>
-                    <Text style={styles.username}>{userName}</Text>
+                    <Text style={styles.service}>{account?.service}</Text>
+                    <Text style={styles.username}>{account?.username}</Text>
                 </View>
         </View>
             <View>
-                <TextInput style={styles.input} value={pass} />
+                <TextInput style={styles.input} value={account?.pass || ''} />
             </View>
-            <Button>Copiar Senha</Button>
+            <Button onPress={copyToClipboard}>Copiar Senha</Button>
+            <View style={{flexDirection: 'row', gap: 20, flex: 1, justifyContent: 'space-between'}}>
+                <Button onPress={() => router.push({pathname: '/update', params: {id}})}>Editar</Button>
+                <Button onPress={handleDelete}>🗑 Excluir</Button>
+            </View>
         </View>
     )
 }

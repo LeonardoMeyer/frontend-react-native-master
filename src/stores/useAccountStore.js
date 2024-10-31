@@ -1,8 +1,8 @@
 import { create } from "zustand"
 
 export const useAccountStore = create((set) => ({
-  accounts: [],
+    accounts: [],
 
-  addAccount: (newAccount) => set((state) => ({ accounts: [...state.accounts, newAccount] })),
-  setAccounts: (newAccounts) => set({ accounts: newAccounts }),
+    addAccount: (newAccount) => set((state) => ({ accounts: [newAccount, ...state.accounts]})),
+    setAccounts: (newAccounts) => set({ accounts: newAccounts }),
 }))
