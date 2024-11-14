@@ -1,10 +1,10 @@
 import { View, StyleSheet, Text, TextInput, Alert } from 'react-native';
 import { useState } from "react";
-import Button from '../Views/components/Button'; // Certifique-se de que o caminho para Button esteja correto
+
 import { useRouter } from 'expo-router';
-import { useAccountStore } from '../../stores/useAccountStore'; // Caminho atualizado para dois níveis acima
-import { useLoginStore } from '../../stores/useLoginStore';
-import colors from '../../colors';
+import { useAccountStore } from '../../stores/useAccountStore';
+import { useLoginStore } from '../stores/useLoginStore';
+import colors from '../colors';
 
 export default function CreateAccount() {
     const { addAccount } = useAccountStore();
@@ -107,7 +107,7 @@ export default function CreateAccount() {
             placeholderTextColor={colors.accent}
           />
 
-          <Button onPress={handleCreateAccount} title="Concluir Cadastro" />
+          <Button onPress={handleCreateAccount} title="Concluir Cadastro" /> {/* Título atualizado para "Concluir Cadastro" */}
         </View>
     );
 }

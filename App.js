@@ -1,14 +1,23 @@
-
-import { View, Text, StyleSheet } from 'react-native';
-import Header from './components/Header'
-import Main from './components/Main';
-import Footer from './components/Footer'
+import React from 'react';
+import { View, StyleSheet, ScrollView } from 'react-native';
+import Header from './views/components/Header';
+import PatientRecords from './views/components/PatientRecords';
+import MedicationSearch from './views/components/MedicationSearch';
+import Appointments from './views/components/Appointments';
+import Billing from './views/components/Billing';
+import Footer from './views/components/Footer';
+import colors from './src/colors';
 
 export default function App() {
   return (
     <View style={styles.container}>
       <Header />
-      <Main />
+      <ScrollView contentContainerStyle={styles.content}>
+        <PatientRecords />
+        <MedicationSearch />
+        <Appointments />
+        <Billing />
+      </ScrollView>
       <Footer />
     </View>
   );
@@ -17,6 +26,10 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
-  }
+    backgroundColor: colors.lightBackground,
+  },
+  content: {
+    padding: 20,
+    paddingBottom: 60,
+  },
 });
